@@ -1,12 +1,19 @@
 import "./App.css";
 import { Formik } from "formik";
 import * as yup from "yup";
+import axios from "axios";
 
 function App() {
 
   const handleSubmit = (values) => {
-    console.log(values);
+    //console.log(values);
+    let body = {   ...values, date: new Date()     }
+    console.log(body);
     // TODO: realizar la petición
+    axios.post('https://sheet.best/api/sheets/2ea755cb-5aa0-485d-805d-24e0a1018f16', body)
+    .then(res => {
+      console.log(res);
+    })
   }
 
   return (
@@ -19,6 +26,7 @@ function App() {
           phone: "",
           dpi: "",
           email: "",
+          date: "",
         }}
         validationSchema={validationSchema}
         enableReinitialize={true}
@@ -121,7 +129,7 @@ function App() {
               </div>
             </div>
             <div className="d-flex justify-content-end">
-              <button className="btn btn-primary">Guardar</button>
+              <button type="submit" className="btn btn-primary">Guardar</button>
             </div>
           </form>
         )}

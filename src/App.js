@@ -139,11 +139,11 @@ function App() {
 }
 
 const validationSchema = yup.object().shape({
-  name: yup.string().required("es requerido"),
-  surname: yup.string().required("es requerido"),
-  phone: yup.string().required("es requerido"),
-  dpi: yup.string().required("es requerido"),
-  email: yup.string().email("email inválido").required("es requerido"),
+  name: yup.string().required("El Nombre es requerido"),
+  surname: yup.string().required("El Apellido es requerido"),
+  phone: yup.string().required("El Telefono es requerido"),
+  dpi: yup.string().required("El DPI es requerido"),
+  email: yup.string().email("Formato de Email inválido").required("El email es requerido"),
 });
 
 export default App;

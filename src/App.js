@@ -1,20 +1,36 @@
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { Formik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
+import Tabletop from 'tabletop';
 
 function App() {
 
+  const [dataSheet, setDataSheet] = useState([]);
+
   const handleSubmit = (values) => {
     //console.log(values);
-    let body = {   ...values, date: new Date()     }
+    let body = { ...values, date: new Date() };
     console.log(body);
     // TODO: realizar la petición
-    axios.post('https://sheet.best/api/sheets/2ea755cb-5aa0-485d-805d-24e0a1018f16', body)
-    .then(res => {
-      console.log(res);
-    })
+    axios
+      .post(
+        "https://sheet.best/api/sheets/2ea755cb-5aa0-485d-805d-24e0a1018f16",
+        body
+      )
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
+  const getDataGoogleSheet = () => {
+    // TODO: agregar el Tabletop y realizar setDataSheet(googleData)
   }
+
+  useEffect(() => {
+    getDataGoogleSheet();
+  }, []);
 
   return (
     <div className="container">
@@ -42,7 +58,7 @@ function App() {
           isSubmitting,
           setFieldValue,
         }) => (
-          <form onSubmit={handleSubmit} >
+          <form onSubmit={handleSubmit}>
             <div className="form-group row">
               <label className="col-sm-2 col-form-label">Nombre:</label>
               <div className="col-sm-10">
@@ -129,7 +145,9 @@ function App() {
               </div>
             </div>
             <div className="d-flex justify-content-end">
-              <button type="submit" className="btn btn-primary">Guardar</button>
+              <button type="submit" className="btn btn-primary">
+                Guardar
+              </button>
             </div>
           </form>
         )}
@@ -142,8 +160,14 @@ const validationSchema = yup.object().shape({
   name: yup.string().required("El Nombre es requerido"),
   surname: yup.string().required("El Apellido es requerido"),
   phone: yup.string().required("El Telefono es requerido"),
-  dpi: yup.string().required("El DPI es requerido").matches(/^[0-9]{4}\s?[0-9]{5}\s?[0-9]{4}$/, "El DPI no es válido"),//Con la siguiente función lambda validamos que el DPI exista
-  email: yup.string().email("Formato de Email inválido").required("El email es requerido"),
+  dpi: yup
+    .string()
+    .required("El DPI es requerido")
+    .matches(/^[0-9]{4}\s?[0-9]{5}\s?[0-9]{4}$/, "El DPI no es válido"), //Con la siguiente función lambda validamos que el DPI exista
+  email: yup
+    .string()
+    .email("Formato de Email inválido")
+    .required("El email es requerido"),
 });
 
 export default App;
